@@ -1,0 +1,2 @@
+# wireguard
+WireGuard Config Generator
