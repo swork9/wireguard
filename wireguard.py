@@ -59,8 +59,14 @@ def main():
         print(f"Address = {srv['address']}")
         print(f"ListenPort = {srv['listen_port']}")
         print(f"PrivateKey = {srv['private_key']}")
-        if 'post_up' in srv: print(f"PostUp = {srv['post_up']}")
-        if 'post_down' in srv: print(f"PostDown = {srv['post_down']}")
+        pus = srv.get('post_up')
+        if pus:
+            for pu in ([pus] if isinstance(pus, str) else pus):
+                print(f"PostUp = {pu}")
+        pds = srv.get('post_down')
+        if pds:
+            for pd in ([pds] if isinstance(pds, str) else pds):
+                print(f"PostDown = {pd}")
         for c in cls:
             print(f"\n# {c['name']}")
             print("[Peer]")
@@ -73,6 +79,14 @@ def main():
             print("[Interface]")
             print(f"Address = {c['address']}")
             print(f"PrivateKey = {c['private_key']}")
+            pus = c.get('post_up')
+            if pus:
+                for pu in ([pus] if isinstance(pus, str) else pus):
+                    print(f"PostUp = {pu}")
+            pds = c.get('post_down')
+            if pds:
+                for pd in ([pds] if isinstance(pds, str) else pds):
+                    print(f"PostDown = {pd}")
             print("\n[Peer]")
             print(f"PublicKey = {srv['public_key']}")
             print(f"PresharedKey = {c['preshared_key']}")

@@ -4,8 +4,13 @@ server:
   endpoint: 1.2.3.4       # Public IP or domain
   # private_key:          # Generated automatically if empty
   # public_key:           # Generated automatically if empty
-  post_up: sysctl -w net.ipv4.ip_forward=1; iptables -A FORWARD -i %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-  post_down: iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+  post_up:
+    - sysctl -w net.ipv4.ip_forward=1
+    - iptables -A FORWARD -i %i -j ACCEPT
+    - iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+  post_down:
+    - iptables -D FORWARD -i %i -j ACCEPT
+    - iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
 
 common:
   persistent_keepalive: 25
